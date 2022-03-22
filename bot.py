@@ -1,4 +1,4 @@
-import discord
+import discord, time
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='-')
@@ -17,6 +17,10 @@ async def votekick(ctx, lol: discord.Member):
     await msg.add_reaction("👍")
 @bot.event 
 async def on_reaction_add(reaction, user):
+    expiresAt = int(time.mktime(reaction.message.created_at.timetuple())+300)
+    timeNow = int(time.time())
+    if timeNow >= expiresAt:
+        return await reaction.message.edit(content=f"this votekick has expired.")
     if reaction.count == 4 and reaction.emoji == "👍":
         await reaction.message.delete()
         try:
