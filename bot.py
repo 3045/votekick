@@ -10,7 +10,7 @@ async def on_ready():
 
 @bot.command()
 async def votekick(ctx, lol: discord.Member):
-    if lol.id == bot.id:
+    if lol.id == bot.user.id:
         await ctx.reply("cant kick me")
         return
     msg = await ctx.reply(f"kick {lol.mention}? (3 votes required)")
